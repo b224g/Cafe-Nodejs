@@ -9,4 +9,4 @@ create table user(
     UNIQUE (email)
 );
 
-insert into user(name,contactNumber,email,password,status,role) values('Admin','123123123','admin@gmail.com','admin','true','admin');
+insert into user(name,contactNumber,email,password,status,role) values('biro','+79996675404','boubacarbirobarry837@gmail.com','moscou2k20','true','admin');

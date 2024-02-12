@@ -83,9 +83,9 @@ router.post('/forgotPassword', (req, res) => {
     const user = req.body;
     query = "select email,password from user where email=?";
     connection.query(query, [user.email], (err, results) => {
-        if (err) {
+        if (!err) {
             if (results.length <= 0) {
-                return res.status(200).json({ message: "Password sent successfully to your email" });
+                return res.status(200).json({ message: "Password sent successfully to your email." });
             }
             else {
                 var mailOptions = {
