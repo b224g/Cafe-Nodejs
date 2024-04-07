@@ -24,7 +24,7 @@ import { ViewBillProductsComponent } from './dialog/view-bill-products/view-bill
   ],
   providers: [],
   declarations: [
-    ViewBillProductsComponent    
+    ViewBillProductsComponent
   ]
 })
 export class MaterialComponentsModule {}
