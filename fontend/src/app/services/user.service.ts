@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {environment} from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -7,13 +7,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class UserService {
 
-  url = environment.apiUrl;
-  constructor(private httpClient:HttpClient) { }
+  url = environment.MyapiUrl;
 
-  signup(data:any){
-    return this.httpClient.post(this.url+
-      "/user/sigup",data,{
-        headers: new HttpHeaders().set('Content-Type',"application/json")
+  constructor(private httpClient: HttpClient) { }
+
+  signup(data: any) {
+    return this.httpClient.post(this.url +
+      "/user/sigup", data, {
+      headers: new HttpHeaders().set('Content-Type', "application/json")
     })
   }
 }

@@ -14,6 +14,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/material-module';
 import { HttpClientModule } from '@angular/common/http';
+import { SidebarComponent } from './layouts/full/sidebar/sidebar.component';
+import { SignupComponent } from './signup/signup.component';
+import {NgxUiLoaderModule,NgxUiLoaderConfig,SPINNER,PB_DIRECTION} from "ngx-ui-loader";
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+const ngxUiLoaderConfig: NgxUiLoaderConfig={
+  text:"loading...",
+  textColor:"#ffffff",
+  textPosition:"center-center",
+  pbColor:" red",
+  bgsColor:"red",
+  fgsColor:"red",
+  fgsType: SPINNER.ballSpinClockwise,
+  fgsSize: 100,
+  pbDirection: PB_DIRECTION.leftToRight,
+  pbThickness:5
+
+}
+
 
 
 @NgModule({
@@ -22,6 +41,9 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     //DashboardComponent,
     BestSellerComponent,
+    SidebarComponent,
+    SignupComponent ,
+    BestSellerComponent
  
  
   ],
@@ -32,8 +54,10 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
+    MatToolbarModule,
     
-    HttpClientModule
+    HttpClientModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   providers: [
     provideClientHydration(),
