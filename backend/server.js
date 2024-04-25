@@ -5,7 +5,7 @@ const app = require('./index');
 
 const server = http.createServer(app);
 server.listen(process.env.PORT);
-*/
+ */
 
 require('dotenv').config();
 
