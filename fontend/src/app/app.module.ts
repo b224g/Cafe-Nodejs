@@ -19,6 +19,7 @@ import { SignupComponent } from './signup/signup.component';
 import {NgxUiLoaderModule,NgxUiLoaderConfig,SPINNER,PB_DIRECTION} from "ngx-ui-loader";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LoginComponent } from './login/login.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig={
   text:"loading...",
@@ -45,7 +46,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig={
     SidebarComponent,
     SignupComponent ,
     BestSellerComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    LoginComponent
  
  
   ],
