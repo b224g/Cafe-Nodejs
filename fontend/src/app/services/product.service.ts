@@ -45,7 +45,7 @@ export class ProductService {
     })
   }
 
-  
+ 
 
   /*
    getProductsByCategory(id: any) {

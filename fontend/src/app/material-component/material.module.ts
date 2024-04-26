@@ -39,7 +39,8 @@ import { ManageUserComponent } from './manage-user/manage-user.component';
     ChangePasswordComponent,
     ManageCategoryComponent,
     CategoryComponent,
-    ManageProductComponent
+    ManageProductComponent,
+    ProductComponent
       // ManageProductComponent,
    //ProductComponent,
    //ManageOrderComponent,
