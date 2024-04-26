@@ -3,6 +3,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SignupComponent } from '../signup/signup.component';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { LoginComponent } from '../login/login.component';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -11,27 +13,38 @@ import { LoginComponent } from '../login/login.component';
 })
 export class HomeComponent implements OnInit {
 
-  constructor (private dialog:MatDialog){}
+  constructor(private dialog: MatDialog,
+    private router: Router,
+    private userService: UserService) { }
 
   ngOnInit(): void {
-    
+    if (localStorage.getItem('token') != null) {
+      this.userService.checkToken().subscribe(
+        (response:any) => {
+          this.router.navigate(['/restaurant/dashboard']);
+        },
+        (error:any) => {
+          console.log(error);
+        }
+      )
+    }
   }
 
-  signupAction(){
+  signupAction() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = "550px";
-    this.dialog.open(SignupComponent,dialogConfig);
+    this.dialog.open(SignupComponent, dialogConfig);
   }
 
-  forgotPasswordAction(){
+  forgotPasswordAction() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width="550px";
-    this.dialog.open(ForgotPasswordComponent,dialogConfig);
+    dialogConfig.width = "550px";
+    this.dialog.open(ForgotPasswordComponent, dialogConfig);
   }
 
-  loginAction(){
+  loginAction() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width="550px";
-    this.dialog.open(LoginComponent,dialogConfig);
+    dialogConfig.width = "550px";
+    this.dialog.open(LoginComponent, dialogConfig);
   }
 }

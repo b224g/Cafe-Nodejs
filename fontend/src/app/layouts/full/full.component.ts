@@ -1,26 +1,22 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import jwt_decode, { jwtDecode } from 'jwt-decode';
-import { MenuItems } from '../../../shared/menu-items';
+import { ChangeDetectorRef, Component, OnDestroy, AfterViewInit } from '@angular/core';
 
+
+/** @title Responsive sidenav */
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
+  selector: 'app-full-layout',
+  templateUrl: 'full.component.html',
   styleUrls: []
 })
-export class AppSidebarComponent implements OnDestroy {
+export class FullComponent implements OnDestroy, AfterViewInit {
   mobileQuery: MediaQueryList;
-  token: any = localStorage.getItem('token');
-  tokenPayload: any;
 
   private _mobileQueryListener: () => void;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher,
-    public menuItems: MenuItems
+    media: MediaMatcher
   ) {
-    this.tokenPayload = jwtDecode(this.token);//jwt_decode
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -29,4 +25,5 @@ export class AppSidebarComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
+  ngAfterViewInit() { }
 }

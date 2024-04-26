@@ -13,13 +13,19 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/material-module';
-import { HttpClientModule } from '@angular/common/http';
-import { SidebarComponent } from './layouts/full/sidebar/sidebar.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { SignupComponent } from './signup/signup.component';
 import {NgxUiLoaderModule,NgxUiLoaderConfig,SPINNER,PB_DIRECTION} from "ngx-ui-loader";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginComponent } from './login/login.component';
+import { TokenInterceptorInterceptor } from './services/token-interceptor.interceptor';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { SharedModule } from './shared/shared.module';
+import { FullComponent } from './layouts/full/full.component';
+import { AppHeaderComponent } from './layouts/full/header/header.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig={
   text:"loading...",
@@ -42,12 +48,15 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig={
     AppComponent,
     HomeComponent,
     //DashboardComponent,
+    FullComponent,
+    AppHeaderComponent,
     BestSellerComponent,
-    SidebarComponent,
+    AppSidebarComponent,
     SignupComponent ,
     BestSellerComponent,
     ForgotPasswordComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
  
  
   ],
@@ -58,14 +67,18 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig={
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
+    FlexLayoutModule,
+    SharedModule,
     MatToolbarModule,
     
     HttpClientModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   providers: [
-    provideClientHydration(),
-    provideAnimationsAsync()
+    /*provideClientHydration(),
+    provideAnimationsAsync(),*/
+    HttpClientModule, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorInterceptor, multi: true }
+    
   ],
   bootstrap: [AppComponent]
 })
