@@ -6,6 +6,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { BillService } from '../../services/bill.service';
 import { GlobalConstants } from '../../shared/global-constants';
 import { ProductService } from '../../services/product.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-manage-order',
@@ -13,10 +14,7 @@ import { ProductService } from '../../services/product.service';
   styleUrl: './manage-order.component.css'
 })
 export class ManageOrderComponent implements OnInit {
-submitAction() {
-throw new Error('Method not implemented.');
-}
-
+  displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
   dataSource: any = [];
   manageOrderForm: any = FormGroup;
   categorys: any = [];
@@ -165,10 +163,11 @@ throw new Error('Method not implemented.');
     this.dataSource = [...this.dataSource];
   }
 
- /* submitAction() {
+
+ submitAction() {
     this.ngxService.start();
-    const formData = this.manageOrderForm.value;
-    const data = {
+    var formData = this.manageOrderForm.value;
+    var data = {
       name: formData.name,
       email: formData.email,
       contactNumber: formData.contactNumber,
@@ -193,18 +192,18 @@ throw new Error('Method not implemented.');
         this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
       }
     )
-  }*/
+  }
 
  downloadFile(fileName: any) {
-    /*const data = {
+      var data = {
       uuid: fileName
     };
     this.billService.getPDF(data).subscribe(
       (response: any) => {
-        saveAs(response, `${fileName}.pdf`);
+        saveAs(response, fileName+'.pdf');
         this.ngxService.stop();
       }
-    )*/
+    )
   }
 
 }

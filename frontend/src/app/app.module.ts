@@ -27,6 +27,7 @@ import { FullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+
 const ngxUiLoaderConfig: NgxUiLoaderConfig={
   text:"loading...",
   textColor:"#ffffff",
