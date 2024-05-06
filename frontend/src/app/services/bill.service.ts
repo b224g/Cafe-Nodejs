@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
@@ -16,15 +16,19 @@ export class BillService {
   }
 
   getPDF(data: any):Observable<Blob>{
-    return this.httpClient.post(`${this.url}/bill/getPDF`,data,{responseType: 'blob'});
+    return this.httpClient.post(this.url+"/bill/getPdf",data,{responseType: 'blob'});
   }
 
   getBills(){
-    return this.httpClient.get(`${this.url}/bill/getBills`);
+    return this.httpClient.get(this.url+"/bill/getBills/");
   }
 
   delete(id: any){
-    return this.httpClient.delete(`${this.url}/bill/delete/${id}`);
+    return this.httpClient.delete(this.url+
+      "/bill/delete/"+id,{
+        headers:new HttpHeaders().set('Content-Type',"application/json")
+      }
+    );
   }
 
 }

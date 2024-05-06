@@ -8,11 +8,15 @@ server.listen(process.env.PORT);
  */
 
 require('dotenv').config();
-
 const http = require('http');
+const cors = require('cors'); // Ajoutez cette ligne pour inclure le package cors
 const app = require('./index');
 
-const port = process.env.PORT || 8080; // Use port 8080 as default if PORT is not defined
+app.use(cors({
+    origin: 'http://localhost:4200' // Remplacez ceci par l'URL de votre frontend Angular
+}));
+
+const port = process.env.PORT || 8080;
 
 const server = http.createServer(app);
 server.listen(port, () => {
