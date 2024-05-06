@@ -81,7 +81,7 @@ export class ViewBillComponent implements OnInit {
     };
     this.billService.getPDF(data).subscribe(
       (response) => {
-        saveAs(response,`${values.uuid}.pdf`);
+        saveAs(response,values.uuid+'pdf');
         this.ngxService.stop();
       }
     )
