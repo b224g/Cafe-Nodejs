@@ -50,7 +50,7 @@ export class UserService {
   update(data:any){
     return this.httpClient.patch(this.url+
       "/user/update",data,{
-        headers:new HttpHeaders().set('Content-Type',"application/json");
+        headers:new HttpHeaders().set('Content-Type',"application/json")
       }
     )
   }
