@@ -57,8 +57,9 @@ router.post('/login', (req, res) => {
             }
             else if (results[0].password == user.password) {
                 const response = { email: results[0].email, role: results[0].role }
-                const accessToken = jwt.sign(response, process.env.ACCESS_TOKEN, { expiresIn: '8h' })
+                const accessToken = jwt.sign(response, process.env.ACCESS_TOKEN, { expiresIn: '24h' })
                 res.status(200).json({ token: accessToken });
+                console.log('connection reussie welcom');
             }
             else {
                 return res.status(400).json({ message: "something went wrong.Please try again later" });

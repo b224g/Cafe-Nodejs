@@ -9,12 +9,12 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
+
 export class DashboardComponent implements AfterViewInit {
+
   responseMessage:any;
   data:any;
-  ngAfterViewInit(): void {
-    
-  }
+  ngAfterViewInit(){}
 
   constructor(
     private dashboardService: DashboardService,

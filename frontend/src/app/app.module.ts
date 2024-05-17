@@ -47,7 +47,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig={
   declarations: [
     AppComponent,
     HomeComponent,
-    DashboardComponent,
     FullComponent,
     AppHeaderComponent,
     BestSellerComponent,
