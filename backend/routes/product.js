@@ -6,7 +6,8 @@ var checkRole = require('../services/checkRole');
 
 //adding product
 
-router.post('/add', auth.authenticateToken, checkRole.checkRole, (req, res) => {
+//, auth.authenticateToken, checkRole.checkRole
+router.post('/add', (req, res) => {
     let product = req.body;
     var query = "insert into product(name,categoryId,description,price,status) values(?,?,?,?,'true')";
     connection.query(query, [product.name, product.categoryId, product.description, product.price], (err, results) => {
@@ -20,9 +21,9 @@ router.post('/add', auth.authenticateToken, checkRole.checkRole, (req, res) => {
 })
 
 //showing product
-
-router.get('/get', auth.authenticateToken, (req, res, next) => {
-    var query = "select p.id, p.name, p.description,p.price,p.status,c.id as categoryId,c.name as categoryName from product as p INNER JOIN category as c where p.categoryId = c.id";
+//, auth.authenticateToken
+router.get('/get', (req, res, next) => {
+    var query = "select p.id, p.name, p.description, p.price, p.status, c.id as categoryId, c.name as categoryName from product as p INNER JOIN category as c where p.categoryId = c.id";
     connection.query(query, (err, results) => {
         if (!err) {
             return res.status(200).json(results);
@@ -34,8 +35,9 @@ router.get('/get', auth.authenticateToken, (req, res, next) => {
 })
 
 //get product by category
+//, auth.authenticateToken
 
-router.get('getByCategory/:id', auth.authenticateToken, (req, res, next) => {
+router.get('getByCategory/:id', (req, res, next) => {
     const id = req.params.id;
     var query = "select id,name from product where categoryId= ? and status='true'";
     connection.query(query, [id], (err, results) => {
@@ -50,7 +52,8 @@ router.get('getByCategory/:id', auth.authenticateToken, (req, res, next) => {
 
 //get product by id
 
-router.get('/getById/:id', auth.authenticateToken, (req, res, next) => {
+//auth.authenticateToken,
+router.get('/getById/:id', (req, res, next) => {
     const id = req.params.id;
     var query = "select id,name,description,price from product where id = ?";
     connection.query(query, [id], (err, results) => {
@@ -65,10 +68,11 @@ router.get('/getById/:id', auth.authenticateToken, (req, res, next) => {
 
 //update product
 
-router.patch('/update', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
+//auth.authenticateToken, checkRole.checkRole,
+router.patch('/update', (req, res, next) => {
     let product = req.body;
-  //  const productId = req.params.id;
-    var query = "update product set name=?,description=?,price=? where id=?";
+    //const productId = req.params.id;
+    let query = "update product set name=?, categoryId=?, description=?,price=? where id=?";
     connection.query(query, [product.name, product.categoryId, product.description, product.price, product.id], (err, results) => {
         if (!err) {
             if (results.affectedRows == 0) {
@@ -84,7 +88,9 @@ router.patch('/update', auth.authenticateToken, checkRole.checkRole, (req, res, 
 
 //delete product
 
-router.delete('/delete/:id', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
+//, auth.authenticateToken, checkRole.checkRole
+
+router.delete('/delete/:id', (req, res, next) => {
     const id = req.params.id;
     var query = "delete from product where id=?";
     connection.query(query, [id], (err, results) => {
@@ -100,7 +106,8 @@ router.delete('/delete/:id', auth.authenticateToken, checkRole.checkRole, (req, 
     })
 })
 
-router.patch('/updateStatus', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
+//, auth.authenticateToken, checkRole.checkRole
+router.patch('/updateStatus', (req, res, next) => {
     let user = req.body;
     var query = "update product set status=? where id=?";
     connection.query(query, [user.status, user.id], (err, results) => {

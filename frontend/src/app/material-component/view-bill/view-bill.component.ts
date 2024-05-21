@@ -16,7 +16,14 @@ import { ConfirmationComponent } from '../dialog/confirmation/confirmation.compo
   styleUrl: './view-bill.component.css'
 })
 export class ViewBillComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'email', 'contactNumber', 'paymentMethod', 'total', 'view'];
+  displayedColumns: string[] = [
+    'name', 
+    'email', 
+    'contactNumber', 
+    'paymentMethod', 
+    'total', 
+    'view'
+  ];
   dataSource: any;
   responseMessage: any;
 
@@ -37,7 +44,7 @@ export class ViewBillComponent implements OnInit {
     this.billService.getBills().subscribe(
       (response: any)=>{
         this.ngxService.stop();
-        this.dataSource = new MatTableDataSource(response);
+        this.dataSource = new MatTableDataSource(response.data);
       },
       (error: any)=>{
         this.ngxService.stop();
@@ -59,7 +66,7 @@ export class ViewBillComponent implements OnInit {
   handleViewAction(values: any){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      data: values
+      data: values,
     };
     dialogConfig.width = '100%';
     const dialogRef = this.dialog.open(ViewBillProductsComponent, dialogConfig);

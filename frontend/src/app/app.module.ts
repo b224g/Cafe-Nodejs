@@ -52,10 +52,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig={
     BestSellerComponent,
     AppSidebarComponent,
     SignupComponent ,
-    BestSellerComponent,
     ForgotPasswordComponent,
-    LoginComponent,
-    DashboardComponent
+    LoginComponent
  
  
   ],
@@ -69,7 +67,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig={
     FlexLayoutModule,
     SharedModule,
     MatToolbarModule,
-    
     HttpClientModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],

@@ -117,7 +117,7 @@ router.post('/forgotPassword', (req, res) => {
 
 //get only users api
 
-router.get('/get', auth.authenticateToken, checkRole.checkRole, (req, res) => {
+router.get('/get', (req, res) => {
     var query = "select id,name,email,contactNumber,status from user where role='user'";
     connection.query(query, (err, results) => {
         if (!err) {
@@ -131,7 +131,7 @@ router.get('/get', auth.authenticateToken, checkRole.checkRole, (req, res) => {
 
 // users status api
 
-router.patch('/update', auth.authenticateToken, checkRole.checkRole, (req, res) => {
+router.patch('/update', (req, res) => {
     let user = req.body;
     var query = "update user set status=? where id=?";
     connection.query(query, [user.status, user.id], (err, results) => {
@@ -148,13 +148,13 @@ router.patch('/update', auth.authenticateToken, checkRole.checkRole, (req, res) 
 
 //check api
 
-router.get('/checkToken', auth.authenticateToken, (req, res) => {
+router.get('/checkToken', (req, res) => {
     return res.status(200).json({ message: "true" });
 })
 
 //change password
 
-router.post('/changePassword',auth.authenticateToken, (req, res) => {
+router.post('/changePassword', (req, res) => {
     const user = req.body;
     const email = res.locals.email;
     var query = "select * from user where email=? and password=?";

@@ -3,7 +3,7 @@ const connection = require('../connection');
 const router = express.Router();
 var auth = require('../services/authentication');
 
-router.get('/details',auth.authenticateToken,(req,res,next)=>{
+router.get('/details',(req,res,next)=>{
     var categoryCount;
     var productCount;
     var billCount;

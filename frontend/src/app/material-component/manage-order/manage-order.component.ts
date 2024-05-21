@@ -14,7 +14,14 @@ import { saveAs } from 'file-saver';
   styleUrl: './manage-order.component.css'
 })
 export class ManageOrderComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
+  displayedColumns: string[] = [
+    'name', 
+    'category', 
+    'price', 
+    'quantity', 
+    'total', 
+    'edit'
+  ];
   dataSource: any = [];
   manageOrderForm: any = FormGroup;
   categorys: any = [];
@@ -33,7 +40,9 @@ export class ManageOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.ngxService.start();
+
     this.getCategorys();
+    
     this.manageOrderForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.pattern(GlobalConstants.nameRegex)]],
       email: [null, [Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
@@ -43,16 +52,16 @@ export class ManageOrderComponent implements OnInit {
       category: [null, [Validators.required]],
       quantity: [null, [Validators.required]],
       price: [null, [Validators.required]],
-      total: [0, [Validators.required]],
+      total: [0, [Validators.required]]
     })
   }
 
   getCategorys() {
-    this.categoryService.getCategorys().subscribe(
-      (response: any) => {
+    this.categoryService.getCategorys().subscribe((response: any) => {
         this.ngxService.stop();
         this.categorys = response;
       }, (error: any) => {
+        this.ngxService.stop();
         if (error.error?.manage) {
           this.responseMessage = error.error?.message;
         } else {
@@ -83,8 +92,7 @@ export class ManageOrderComponent implements OnInit {
     )
   }
   getProductDetails(value: any) {
-    this.productService.getById(value.id).subscribe(
-      (response: any) => {
+    this.productService.getById(value.id).subscribe((response: any) => {
         this.price = response.price;
         this.manageOrderForm.controls['price'].setValue(response.price);
         this.manageOrderForm.controls['quantity'].setValue('1');
@@ -133,13 +141,14 @@ export class ManageOrderComponent implements OnInit {
       !(this.manageOrderForm.controls['email'].valid)
     ) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   add() {
-    const formData = this.manageOrderForm.value;
-    const productName = this.dataSource.find((e: { id: number }) => e.id == formData.product.id);
+    var formData = this.manageOrderForm.value;
+    var productName = this.dataSource.find((e: { id: number }) => e.id == formData.product.id);
     if (productName === undefined) {
       this.totalAmount = this.totalAmount + formData.total;
       this.dataSource.push({
@@ -151,7 +160,7 @@ export class ManageOrderComponent implements OnInit {
         total: formData.total
       });
       this.dataSource = [...this.dataSource];
-      this.snackbarService.openSnackBar(GlobalConstants.productAdded, 'success');
+      this.snackbarService.openSnackBar(GlobalConstants.productAdded, "success");
     } else {
       this.snackbarService.openSnackBar(GlobalConstants.productExistError, GlobalConstants.error);
     }

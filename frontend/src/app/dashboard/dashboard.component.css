@@ -2,79 +2,88 @@
 	position: relative;
 }
 
-.add-contact {
-	position: absolute;
-    right: 17px;
-    top: 57px;
+mat-card {
+  border: #3f51b5 2px solid;
+  color: #080d29;
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-  }
+  font-family: Poppins, sans-serif;
+  margin: 0;
+}
   
-  html {
-    box-sizing: border-box;
-  }
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.column {
+  float: left;
+  width: 31.5%;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  border: 2px solid #3f51b5;
+  border-radius: 5px;
+}
+ 
+.title {
+  padding-top: 10px;
+  color: #1E1D1D;
+  font-size: 15px;
+  text-align: center !important;
+}
+
+.number {
+  color: #1E1D1D;
+  padding-bottom: 10px;
+  text-align: center !important;
+}
   
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 10px;
+  font-family: Poppins, sans-serif;
+  color: #fff;
+  background-color: #3f51b5;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  transition: all .5s ease;
+}
   
+.button:hover {
+  background-color: #3f51b5;
+}
+  
+@media screen and (max-width: 650px) {
   .column {
-    float: left;
-    width: 33.3%;
-    margin-bottom: 16px;
-    padding: 0 8px;
+    width: 100%;
+    display: block;
   }
-  
-  .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 8px;
-  }
-  
-  .about-section {
-    padding: 50px;
-    text-align: center;
-    background-color: #474e5d;
-    color: white;
-  }
-  
-  .container {
-    padding: 0 16px;
-  }
-  
-  .container::after, .row::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  
+
   .title {
-    color: black;
+    padding-top: 10px;
+    color: #1E1D1D;
+    font-size: 11px;
     text-align: center !important;
   }
   
-  .button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: white;
-    background-color: #e53935;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-    font-weight: bold;
+  .number {
+    color: #1E1D1D;
+    padding-bottom: 10px;
+    text-align: center !important;
   }
-  
-  .button:hover {
-    background-color: #555;
-  }
-  
-  @media screen and (max-width: 650px) {
-    .column {
-      width: 100%;
-      display: block;
-    }
-  }
+}

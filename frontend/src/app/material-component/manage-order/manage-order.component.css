@@ -1,18 +1,76 @@
+.main-card {
+  position: relative;
+}
+
+.float-right {
+  border: 2px solid white;
+  color: white;
+  background-color: #3f51b5;
+  position: absolute;
+  right: 20px;
+  top: 11px;
+  transition: all 0.3s ease-in-out;
+}
+
+.float-right:hover {
+  color: #3f51b5;
+  background-color: #fff;
+}
+
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+
+mat-card {
+  border: solid 2px #3f51b5;
+  color: #080d29;
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
+}
+
 mat-form-field {
-    padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.forms {
+  background-color: white;
+  color: #1E1D1D;
+  border: 2px solid #3f51b5;
+  font-size: 15px;
+  text-align: left;
+}
+
+body {
+  font-family: Poppins, sans-serif;
+  margin: 0;
+}
+
+table {
+  width: 100%;
+  border: 2px solid #3f51b5;
+  border-radius: 5px;
+}
+
+::ng-deep.highlight {
+  color: white;
+  background: #3f51b5;
+}
+
+.spacer {
+  margin: 20px;
+}
+
+@media screen and (max-width: 700px) {
+  mat-card {
+      background-color: #3f51b5;
+      color: white;
+      font-size: 20px;
+      text-align: left;
+      padding: 20px;
   }
-  
-  .float-right {
-    float: right;
-  }
-  
-  table {
-    width: 100%;
-  }
-  
-  .mat-card-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
+}
