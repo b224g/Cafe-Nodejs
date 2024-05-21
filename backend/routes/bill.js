@@ -1,111 +1,142 @@
 const express = require('express');
 const connection = require('../connection');
 const router = express.Router();
-let ejs = require('ejs');
-let pdf = require('html-pdf');
-let path = require('path');
-var fs = require('fs');
-var uuid = require('uuid');
-var auth = require('../services/authentication');
+const ejs = require('ejs');
+const pdf = require('html-pdf');
+const path = require('path');
+const fs = require('fs');
+const uuid = require('uuid');
+const auth = require('../services/authentication');
 
-//, auth.authenticateToken
-router.post('/generateReport', (req, res) => {
+// Middleware d'authentification
+const authenticateToken = (req, res, next) => {
+    // Votre logique d'authentification pour extraire l'email de l'utilisateur
+    // Exemple simplifié :
+    res.locals.email = "admin@gmail.com"; // Remplacez cette ligne par votre logique d'authentification
+    next();
+};
+
+// Route pour générer un rapport
+router.post('/generateReport', authenticateToken, (req, res) => {
     const generatedUuid = uuid.v1();
     const orderDetails = req.body;
-    var productDetailsReport = JSON.parse(orderDetails.productDetails);
 
-    query = "insert into bill(name,uuid,email,contactNumber,paymentMethod,total,productDetails,createBy) values(?,?,?,?,?,?,?,?)";
+    let productDetailsReport;
+    try {
+        productDetailsReport = JSON.parse(orderDetails.productDetails);
+    } catch (error) {
+        return res.status(400).json({ error: 'Invalid product details format' });
+    }
+
+    const query = "INSERT INTO bill (name, uuid, email, contactNumber, paymentMethod, total, productDetails, createBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     connection.query(query, [orderDetails.name, generatedUuid, orderDetails.email, orderDetails.contactNumber, orderDetails.paymentMethod, orderDetails.totalAmount, orderDetails.productDetails, res.locals.email], (err, results) => {
-        if (!err) {
-            ejs.renderFile(
-                path.join(__dirname, '', "report.ejs"),
-                { productDetails: productDetailsReport,
-                    name: orderDetails.name, 
-                    email: orderDetails.email, 
-                    contactNumber: orderDetails.contactNumber, 
-                    paymentMethod: orderDetails.paymentMethod, 
-                    totalAmount: orderDetails.totalAmount 
-                }, (err, results) => {
+        if (err) {
+            return res.status(500).json(err);
+        }
+
+        ejs.renderFile(
+            path.join(__dirname, 'report.ejs'),
+            {
+                productDetails: productDetailsReport,
+                name: orderDetails.name,
+                email: orderDetails.email,
+                contactNumber: orderDetails.contactNumber,
+                paymentMethod: orderDetails.paymentMethod,
+                totalAmount: orderDetails.totalAmount
+            },
+            (err, renderedHtml) => {
                 if (err) {
                     return res.status(500).json(err);
                 }
-                else {
-                    pdf.create(results).toFile('./generated_pdf/' + generatedUuid + ".pdf", function (err,data){
-                        if (err) {
-                            console.log(err);
-                            return res.status(500).json(err);
-                        }
-                        else {
-                            return res.status(200).json({ uuid: generatedUuid });
-                        }
-                    })
-                }
-            })
-        }
-        else {
-            return res.status(500).json(err);
-        }
 
-    })
-})
-
-//auth.authenticateToken,
-router.post('/getPdf',function(req,res){
-    const orderDetails = req.body;
-    const pdfPath = './generated_pdf'+orderDetails+'.pdf';
-    if(fs.existsSync(pdfPath)){
-        res.contentType("application/pdf");
-        fs.createReadStream(pdfPath).pipe(res);
-    }
-    else{
-        var productDetailsReport = JSON.parse(orderDetails.productDetails);
-        ejs.renderFile(path.join(__dirname, '', "report.ejs"), { productDetails: productDetailsReport, name: orderDetails.name, email: orderDetails.email, contactNumber: orderDetails.contactNumber, paymentMethod: orderDetails.paymentMethod, totalAmount: orderDetails.totalAmount }, (err, results) => {
-            if (err) {
-                return res.status(500).json(err);
-            }
-            else {
-                pdf.create(results).toFile('./generated_pdf/' + orderDetails.uuid + ".pdf", function (err, data) {
+                const pdfPath = './generated_pdf/' + generatedUuid + ".pdf";
+                pdf.create(renderedHtml).toFile(pdfPath, (err, data) => {
                     if (err) {
-                        console.log(err);
                         return res.status(500).json(err);
                     }
-                    else {
-                        res.contentType("application/pdf");
-                        fs.createReadStream(pdfPath).pipe(res);
-                    }
-                })
+                    return res.status(200).json({ uuid: generatedUuid });
+                });
             }
-        })
-    }
-})
+        );
+    });
+});
 
-//,auth.authenticateToken
-router.get('/getBills',(req,res,next)=>{
-    var query = "select* from bill order by id DESC";
-    connection.query(query,(err,results)=>{
-        if(!err){
-            return res.status(200).json(results);
+// Route pour obtenir un PDF
+router.post('/getPdf', (req, res) => {
+    const { uuid, productDetails, name, email, contactNumber, paymentMethod, totalAmount } = req.body;
+    const pdfPath = './generated_pdf/' + orderDetails.uuid+ '.pdf';
+
+    if (fs.existsSync(pdfPath)) {
+        res.contentType("application/pdf");
+        fs.createReadStream(pdfPath).pipe(res);
+    } else {
+        let productDetailsReport;
+        try {
+            productDetailsReport = JSON.parse(productDetails);
+        } catch (error) {
+            return res.status(400).json({ error: 'Invalid product details format' });
         }
-        else{
-            return res.status(500).json(err);
-        }
-    })
-})
-//,auth.authenticateToken
-router.delete('/delete/:id',(req,res,next)=>{
-    const id = req.params.id;
-    var query = "delete from bill where id=?";
-    connection.query(query,[id],(err,results)=>{
-        if(!err){
-            if(results.affectedRows == 0){
-                return res.status(404).json({message:"bill id does nos found"});
+
+        ejs.renderFile(
+            path.join(__dirname, 'report.ejs'),
+            {
+                productDetails: productDetailsReport,
+                name,
+                email,
+                contactNumber,
+                paymentMethod,
+                totalAmount
+            },
+            (err, renderedHtml) => {
+                if (err) {
+                    return res.status(500).json(err);
+                }
+
+                pdf.create(renderedHtml).toFile(pdfPath, (err, data) => {
+                    if (err) {
+                        return res.status(500).json(err);
+                    }
+
+                    res.contentType("application/pdf");
+                    fs.createReadStream(pdfPath).pipe(res);
+                });
             }
-            return res.status(200).json({message:"bill Deleted Successfully"});
-        }
-        else{
+        );
+    }
+});
+
+// Route pour obtenir les factures
+router.get('/getBills', (req, res) => {
+    const query = "SELECT * FROM bill ORDER BY id DESC";
+    connection.query(query, (err, results) => {
+        if (!err) {
+            return res.status(200).json(results);
+        } else {
             return res.status(500).json(err);
         }
-    })
-})
+    });
+});
+
+// Route pour supprimer une facture
+router.delete('/delete/:id', (req, res) => {
+    const id = req.params.id;
+    const query = "DELETE FROM bill WHERE id = ?";
+    connection.query(query, [id], (err, results) => {
+        if (!err) {
+            if (results.affectedRows == 0) {
+                return res.status(404).json({ message: "Bill ID not found" });
+            }
+            return res.status(200).json({ message: "Bill deleted successfully" });
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+});
+
+// Middleware de gestion des erreurs (doit être défini après les routes)
+router.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something went wrong!' });
+});
 
 module.exports = router;
