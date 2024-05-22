@@ -25,18 +25,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from './shared/shared.module';
 import { FullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig={
   text:"loading...",
   textColor:"#ffffff",
   textPosition:"center-center",
-  pbColor:" red",
-  bgsColor:"red",
-  fgsColor:"red",
+  pbColor:" blue",
+  bgsColor:"blue",
+  fgsColor:"blue",
   fgsType: SPINNER.ballSpinClockwise,
-  fgsSize: 100,
+  fgsSize: 50,
   pbDirection: PB_DIRECTION.leftToRight,
   pbThickness:5
 

@@ -37,14 +37,14 @@ export class ViewBillComponent implements OnInit {
 
   ngOnInit(): void {
     this.ngxService.start();
-    this.tableData();
+    this.tableData(); // load data from db
   }
 
   tableData(){
     this.billService.getBills().subscribe(
       (response: any)=>{
         this.ngxService.stop();
-        this.dataSource = new MatTableDataSource(response.data);
+        this.dataSource = new MatTableDataSource(response);
       },
       (error: any)=>{
         this.ngxService.stop();
@@ -128,4 +128,5 @@ export class ViewBillComponent implements OnInit {
       }
     );
   }
+
 }

@@ -21,7 +21,7 @@ router.post('/add', (req, res) => {
 })
 
 //showing product
-//, auth.authenticateToken
+
 router.get('/get', (req, res, next) => {
     var query = "select p.id, p.name, p.description, p.price, p.status, c.id as categoryId, c.name as categoryName from product as p INNER JOIN category as c where p.categoryId = c.id";
     connection.query(query, (err, results) => {
@@ -37,7 +37,7 @@ router.get('/get', (req, res, next) => {
 //get product by category
 //, auth.authenticateToken
 
-router.get('getByCategory/:id', (req, res, next) => {
+router.get('/getByCategory/:id', (req, res, next) => {
     const id = req.params.id;
     var query = "select id,name from product where categoryId= ? and status='true'";
     connection.query(query, [id], (err, results) => {

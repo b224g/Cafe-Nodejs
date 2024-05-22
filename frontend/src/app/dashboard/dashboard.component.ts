@@ -29,7 +29,7 @@ export class DashboardComponent implements AfterViewInit {
     this.dashboardService.getDetails().subscribe(
       (response: any) => {
         this.ngxService.stop();
-        this.data = response.data;
+        this.data = response;
       },
       (error: any) => {
         this.ngxService.stop();

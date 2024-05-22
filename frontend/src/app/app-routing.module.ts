@@ -3,8 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FullComponent } from './layouts/full/full.component';
 import { RouteGuardService } from './services/route-guard.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { BestSellerComponent } from './best-seller/best-seller.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },//Fullc

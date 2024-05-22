@@ -3,8 +3,8 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-responsibe table
-/*@media(max-width: 800px) {
+
+@media(max-width: 800px) {
   .responsive_table {
       overflow-x: auto !important;
   }
@@ -12,7 +12,7 @@ responsibe table
   .mat-table {
       min-width:800px;
   }
-}*/
+}
 
 .mat-row {
   height: auto;

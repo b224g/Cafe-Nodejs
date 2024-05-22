@@ -133,7 +133,7 @@ router.delete('/delete/:id', (req, res) => {
     });
 });
 
-// Middleware de gestion des erreurs (doit être défini après les routes)
+// Middleware de gestion des erreurs 
 router.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Something went wrong!' });
