@@ -64,7 +64,7 @@ router.post('/generateReport', authenticateToken, (req, res) => {
 // Route pour obtenir un PDF
 router.post('/getPdf', (req, res) => {
     const { uuid, productDetails, name, email, contactNumber, paymentMethod, totalAmount } = req.body;
-    const pdfPath = './generated_pdf/' + orderDetails.uuid+ '.pdf';
+    const pdfPath = './generated_pdf/' + uuid + '.pdf'; // Utilisez uuid directement ici
 
     if (fs.existsSync(pdfPath)) {
         res.contentType("application/pdf");
@@ -133,7 +133,7 @@ router.delete('/delete/:id', (req, res) => {
     });
 });
 
-// Middleware de gestion des erreurs 
+// Middleware de gestion des erreurs (doit être défini après les routes)
 router.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Something went wrong!' });
