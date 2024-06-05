@@ -1,11 +1,11 @@
 
 require('dotenv').config();
 const http = require('http');
-const cors = require('cors'); // Ajoutez cette ligne pour inclure le package cors
+const cors = require('cors'); 
 const app = require('./index');
 
 app.use(cors({
-    origin: 'http://localhost:4200' // Remplacez ceci par l'URL de votre frontend Angular
+    origin: 'http://localhost:4200'
 }));
 
 const port = process.env.PORT || 8080;

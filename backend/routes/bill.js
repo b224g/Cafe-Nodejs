@@ -10,9 +10,8 @@ const auth = require('../services/authentication');
 
 // Middleware d'authentification
 const authenticateToken = (req, res, next) => {
-    // Votre logique d'authentification pour extraire l'email de l'utilisateur
-    // Exemple simplifié :
-    res.locals.email = "admin@gmail.com"; // Remplacez cette ligne par votre logique d'authentification
+
+    res.locals.email = "admin@gmail.com"; 
     next();
 };
 

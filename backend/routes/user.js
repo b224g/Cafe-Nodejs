@@ -95,7 +95,7 @@ router.post('/forgotPassword', (req, res) => {
                 var mailOptions = {
                     from: process.env.EMAIL,
                     to: results[0].email,
-                    subject: 'Password by Cafe Management System',
+                    subject: 'Password by RestauEasy System',
                     html: '<p><b>Your Login details for cafe Management System</b><br><b>Email: </b>' + results[0].email + '<br><b>Password:</b>' + results[0].password + '<br><a href="http://localhost:4200/">Click here to login</p>'
 
                 };
